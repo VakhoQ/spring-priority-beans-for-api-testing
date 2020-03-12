@@ -1,9 +1,16 @@
 package com.vakhtang.controller;
 
+import com.vakhtang.dao.DataDbRepository;
+import com.vakhtang.service.DBServiceImpl;
+import com.vakhtang.service.DataService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,6 +26,19 @@ public class DataApiTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@MockBean
+	private DBServiceImpl repository;
+
+	@Before
+	public void executedBeforeEach() {
+		MockitoAnnotations.initMocks(this);
+	}
+
+	@Test
+	public void DbServiceTest() {
+		Mockito.when(repository.getData(1l)).thenReturn("test data");
+		assertThat(repository.getData(1l)).contains("test data");
+	}
 
 	@Test
 	public void testDataService() {

@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DataServiceImpl implements DataService {
+public class DBServiceImpl {
 
-    public String getData(){
-        return  "returning real data";
+    @Autowired
+    DataDbRepository repository;
+
+    public String getData(Long id){
+        return repository.fetchData(id);
     }
 }
